@@ -1,44 +1,33 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { Movies } from '../data';
-import { Movie } from 'src/app/models/movies.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { DecimalPipe, NgFor } from '@angular/common';
+import { ApiService } from 'src/app/service/api.service';
+import { Movie, Results } from 'src/app/models/movies.model';
 
 
 @Component({
   selector: 'app-movie-table',
   standalone: true,
-  imports: [MatPaginatorModule, MatTableModule, MatFormFieldModule, MatInputModule, MatSortModule],
+  imports: [NgFor, DecimalPipe],
   templateUrl: './movie-table.component.html',
   styleUrls: ['./movie-table.component.scss']
 })
 export class MovieTableComponent implements OnInit {
-  displayedColumns: string[] = ["title", "poster_path", "release_date" ];
-  dataSource: MatTableDataSource<Movie>;
+  @Input() movies: Movie[] | any;
+  perPage = 5;
+  currentPage = 1;
+  
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  constructor() {
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(Movies);
+  constructor(private apiService: ApiService) {
+  
   }
-
-  ngAfterViewInit() {
-    this.dataSource!.paginator = this.paginator;
-    this.dataSource!.sort = this.sort;
+  ngOnInit(): void{
+    this.getDataDiscover();
   }
+  public getDataDiscover(): void{
+      this.apiService.getDataDiscover(this.currentPage).subscribe((data: Results) => {
+        this.movies = data.results;
+        console.log(data.results);
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-  ngOnInit() {}
+  });
+}
 }
