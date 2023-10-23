@@ -1,4 +1,10 @@
 <p> The most popular TV Shows in Korea</p>
+<mat-paginator 
+[length]="totalPages" 
+[pageSize]="pageSize" 
+[pageIndex]="currentPage - 1" 
+(page)="onPageChange($event)">
+  </mat-paginator>
 <table class="table table-danger table-hover table-borderless">
 	<thead>
 		<tr>
