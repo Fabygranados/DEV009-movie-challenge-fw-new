@@ -1,10 +1,5 @@
 <p> The most popular TV Shows in Korea</p>
-<mat-paginator 
-[length]="totalPages" 
-[pageSize]="pageSize" 
-[pageIndex]="currentPage - 1" 
-(page)="onPageChange($event)">
-  </mat-paginator>
+  
   <mat-label> Filter by Year </mat-label>
   <mat-chip-listbox (ngModel)="years" (change)="sortingPopular()" required>
 	<mat-chip-option value="2023"> 2023 </mat-chip-option> 
@@ -36,3 +31,9 @@
 		</tr>
 	</tbody>
 </table>
+<mat-paginator 
+[length]="totalPages" 
+[pageSize]="pageSize" 
+[pageIndex]="currentPage - 1" 
+(page)="onPageChange($event)">
+</mat-paginator>
