@@ -5,6 +5,10 @@
 [pageIndex]="currentPage - 1" 
 (page)="onPageChange($event)">
   </mat-paginator>
+  <mat-label> Filter by Year </mat-label>
+  <mat-chip-listbox (ngModel)="years" (change)="sortingPopular()" required>
+	<mat-chip-option value="2023"> 2023 </mat-chip-option> 
+  </mat-chip-listbox>
 <table class="table table-danger table-hover table-borderless">
 	<thead>
 		<tr>
@@ -16,7 +20,7 @@
 	<tbody>
 		<tr *ngFor="let movie of movies">
 			<td>
-        {{ movie.name }} 
+        {{ movie.original_name}} 
 		<br><strong>Origin</strong>
 		{{movie.origin_country}}
 		<br><strong>Air Date</strong>

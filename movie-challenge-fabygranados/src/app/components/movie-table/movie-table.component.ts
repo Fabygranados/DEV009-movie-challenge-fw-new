@@ -17,7 +17,7 @@ export class MovieTableComponent implements OnInit {
   pageSize: number = 20;
   pages: number[] = [];
  
-  
+  years: string= '2023';
 
   constructor(private apiService: ApiService) {
   
@@ -30,7 +30,7 @@ export class MovieTableComponent implements OnInit {
         this.movies = data.results;
         this.currentPage = data.page;
         this.totalPages = data.total_results;
-        console.log(data);
+        // console.log(data);
 
   });
 }
@@ -47,4 +47,14 @@ export class MovieTableComponent implements OnInit {
   }
   return Math.ceil(this.movies.length / this.pageSize);
  }
+//Mostrar solo populares en 2023
+sortingPopular(){
+  this.popularSort(this.years)
+}
+ popularSort(year: string){
+  this.apiService.thisYearTVList(year).subscribe((data: Results) => {
+    this.movies = data.results;
+    console.log(data);
+  });
+}
 }

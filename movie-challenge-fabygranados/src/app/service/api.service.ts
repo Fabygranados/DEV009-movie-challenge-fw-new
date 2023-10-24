@@ -16,6 +16,10 @@ export class ApiService {
   
   getDataDiscover(page: number): Observable<Results> {
      //nose si esto sea necesario
-    return this.http.get<Results>(`${this.url}/tv/top_rated?api_key=${this.apiKey}&language=KR&page=${page}`);
+    return this.http.get<Results>(`${this.url}/discover/tv?api_key=${this.apiKey}&include_adult=false&include_null_first_air_dates=false&page=${page}&timezone=KR&watch_region=KR&language=ko`);
+  }
+  thisYearTVList(byyear: string): Observable<Results>{
+    return this.http.get<Results>(`${this.url}/discover/tv?api_key=${this.apiKey}&include_adult=false&include_null_first_air_dates=false&page=1&timezone=KR&watch_region=KR&first_air_date_year=${byyear}`);
+  
   }
 }
