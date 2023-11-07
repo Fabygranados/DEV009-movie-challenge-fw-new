@@ -4,36 +4,21 @@
   <mat-chip-listbox (ngModel)="years" (change)="sortingPopular()" required>
 	<mat-chip-option value="2023"> 2023 </mat-chip-option> 
   </mat-chip-listbox>
-<table class="table table-danger table-hover table-borderless">
-	<thead>
-		<tr>
-			<th scope="col">Movie/Details</th>
-			<th scope="col">Poster</th>
-			<th scope="col">Popularity</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let movie of movies">
-			<td>
-        {{ movie.original_name}} 
-		<br><strong>Origin</strong>
-		{{movie.origin_country}}
-		<br><strong>Air Date</strong>
-		{{movie.first_air_date}}
-			</td>
-			<td>
-      <img
-        [src]="'https://image.tmdb.org/t/p/w92/' + movie.poster_path"
-        class="me-auto"
-      />
-    </td>
-			<td>{{ movie.vote_average | number }}</td>
-		</tr>
-	</tbody>
-</table>
 <mat-paginator 
 [length]="totalPages" 
 [pageSize]="pageSize" 
 [pageIndex]="currentPage - 1" 
 (page)="onPageChange($event)">
 </mat-paginator>
+<div class="container-card">
+	<div class="card" *ngFor="let movie of movies">
+	  <div class="cta">
+		<ng-container *ngIf="movie.poster_path">
+		  <img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="{{ movie.title }}">
+		</ng-container>
+		<div class="card__content">
+		  <p class="vote-card">{{movie.original_name}} <br><strong>Popularity</strong> <br> <span class="material-icons">favorite  </span> {{ movie.popularity }} Likes </p>
+		  <button class="card__button"><a [routerLink]="['/movie', movie.id]">Show Details</a></button>
+		</div>
+	  </div>
+	</div>

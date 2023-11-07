@@ -30,7 +30,7 @@ export class MovieTableComponent implements OnInit {
         this.movies = data.results;
         this.currentPage = data.page;
         this.totalPages = data.total_results;
-        // console.log(data);
+        console.log(data);
 
   });
 }
@@ -54,7 +54,6 @@ sortingPopular(){
  popularSort(year: string){
   this.apiService.thisYearTVList(year).subscribe((data: Results) => {
     this.movies = data.results;
-    console.log(data);
   });
 }
 }
